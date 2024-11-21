@@ -1,0 +1,275 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Learning Performance Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4caf50, #2196f3);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .form-container {
+            background: linear-gradient(135deg, #ffffff, #e9ecef);
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #4caf50;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border: 1px solid #4caf50;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background: #4caf50;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background: #45a049;
+        }
+           .prediction-output {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            text-align: center;
+            color: #333;
+            padding: 15px;
+            background: #f1f1f1;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Online Learning Performance Predictor</h1>
+        <p>Enter student details to predict performance</p>
+    </header>
+
+    <!-- Main Form Section -->
+    <div class="form-container">
+        <h2>Enter Student Information</h2>
+        <form action="/predict" method="POST" id="prediction-form">
+
+            <!-- First Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="nationality">Nationality:</label>
+                    <input type="text" id="nationality" name="nationality" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="place_of_birth">Place of Birth:</label>
+                    <input type="text" id="place_of_birth" name="place_of_birth" required>
+                </div>
+            </div>
+
+            <!-- Second Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="stage_id">Stage ID:</label>
+                    <input type="text" id="stage_id" name="stage_id" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="grade_id">Grade ID:</label>
+                    <input type="text" id="grade_id" name="grade_id" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="section_id">Section ID:</label>
+                    <input type="text" id="section_id" name="section_id" required>
+                </div>
+            </div>
+
+            <!-- Third Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="topic">Topic:</label>
+                    <input type="text" id="topic" name="topic" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="semester">Semester:</label>
+                    <select id="semester" name="semester" required>
+                        <option value="">Select Semester</option>
+                        <option value="F">F</option>
+                        <option value="S">S</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="relation">Relation:</label>
+                    <select id="relation" name="relation" required>
+                        <option value="">Select Relation</option>
+                        <option value="Father">Father</option>
+                        <option value="Mum">Mum</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Fourth Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="raised_hands">Raised Hands:</label>
+                    <input type="number" id="raised_hands" name="raised_hands" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="visited_resources">Visited Resources:</label>
+                    <input type="number" id="visited_resources" name="visited_resources" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="announcements_view">Announcements View:</label>
+                    <input type="number" id="announcements_view" name="announcements_view" min="0" required>
+                </div>
+            </div>
+
+            <!-- Fifth Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="discussion">Discussion Participation:</label>
+                    <input type="number" id="discussion" name="discussion" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="parent_answering_survey">Parent Answering Survey:</label>
+                    <select id="parent_answering_survey" name="parent_answering_survey" required>
+                        <option value="">Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="parent_school_satisfaction">Parent School Satisfaction:</label>
+                    <select id="parent_school_satisfaction" name="parent_school_satisfaction" required>
+                        <option value="">Select</option>
+                        <option value="Good">Good</option>
+                        <option value="Bad">Bad</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Sixth Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="student_absence_days">Student Absence Days:</label>
+                    <select id="student_absence_days" name="student_absence_days" required>
+                        <option value="">Select</option>
+                        <option value="Under-7">Under 7</option>
+                        <option value="Above-7">Above 7</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-button">Predict Performance</button>
+        </form>
+           <!-- Prediction Output -->
+        {% if prediction_text %}
+        <div class="prediction-output">
+            {{ prediction_text }}
+        </div>
+        {% endif %}
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Online Learning Performance. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
